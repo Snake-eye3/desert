@@ -35,10 +35,24 @@
   reveals.forEach(r => observer.observe(r));
  
   // BLOG FILTERS
+  // BLOG FILTERS
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      const filter = btn.textContent.trim().toLowerCase();
+      document.querySelectorAll('.blog-card').forEach(card => {
+        const tag = card.querySelector('.blog-card-tag');
+        if (!tag) return;
+        const category = tag.textContent.trim().toLowerCase();
+        if (filter === 'all' || category.includes(filter)) {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+        } else {
+          card.style.opacity = '0.2';
+          card.style.pointerEvents = 'none';
+        }
+      });
     });
   });
  
