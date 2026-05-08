@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Port Sudan and the Anatomy of a Humanitarian Hub — Anas Ibrahim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* POST HEADER */
+  .post-header {
+    background: var(--charcoal);
+    padding: 10rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .post-header-bg {
+    position: absolute;
+    font-family: var(--serif);
+    font-size: clamp(5rem, 14vw, 16rem);
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(196, 96, 58, 0.06);
+    bottom: -1rem; right: 2rem;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .post-header-inner {
+    max-width: 760px;
+    position: relative; z-index: 2;
+  }
+  .post-header-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .post-header-tag::before { content: ''; width: 2rem; height: 1px; background: var(--terra); }
+  .post-header-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--sand);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .post-header-meta {
+    display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: rgba(232,213,176,0.35);
+    letter-spacing: 0.05em;
+  }
+  .post-header-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+  /* PROGRESS BAR */
+  .reading-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--terra);
+    z-index: 999;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* ARTICLE BODY */
+  .post-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  /* TYPOGRAPHY */
+  .post-body p {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+  }
+  .post-body h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin: 3rem 0 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .post-body h3 {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin: 2.5rem 0 1rem;
+  }
+  .post-body blockquote {
+    border-left: 3px solid var(--terra);
+    padding: 1rem 1.5rem;
+    margin: 2.5rem 0;
+    background: var(--sand);
+  }
+  .post-body blockquote p {
+    font-style: italic;
+    color: var(--ink);
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  .post-body strong { font-weight: 600; color: var(--charcoal); }
+  .post-body em { color: var(--terra); font-style: italic; }
+
+  .post-body a {
+    color: var(--terra);
+    text-decoration: underline;
+    text-decoration-color: rgba(196,96,58,0.3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
+  .post-body a:hover { text-decoration-color: var(--terra); }
+
+  /* DROPCAP */
+  .post-body p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--terra);
+    float: left;
+    line-height: 0.75;
+    margin: 0.1em 0.1em 0 0;
+  }
+
+  /* DIVIDER */
+  .post-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 3rem 0;
+    color: var(--terra);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.2rem;
+  }
+  .post-divider::before, .post-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--sand-dark);
+  }
+
+  /* FOOTNOTE STYLE ASIDE */
+  .post-aside {
+    background: var(--sand);
+    border: 1px solid var(--sand-dark);
+    padding: 1.5rem;
+    margin: 2.5rem 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-family: var(--sans);
+  }
+  .post-aside-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  /* POST FOOTER */
+  .post-footer {
+    background: var(--sand);
+    padding: 4rem;
+    border-top: 1px solid var(--sand-dark);
+  }
+  .post-footer-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .post-footer-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--sand-dark);
+    margin-bottom: 3rem;
+  }
+  .post-nav-item {
+    background: var(--sand-light);
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .post-nav-item:hover { background: var(--sand); }
+  .post-nav-dir {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  .post-nav-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    line-height: 1.3;
+  }
+  .post-nav-item.next { text-align: right; }
+
+  .back-to-blog {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.2s;
+  }
+  .back-to-blog:hover { gap: 1.25rem; }
+
+  @media (max-width: 768px) {
+    .post-header { padding: 8rem 1.5rem 3rem; }
+    .post-body { padding: 3rem 1.5rem; }
+    .post-footer { padding: 3rem 1.5rem; }
+    .post-nav { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reading-progress" id="readingProgress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="../index.html">An<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="index.html" style="color:var(--terra)">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- POST HEADER -->
+<div class="post-header">
+  <div class="post-header-bg">SUDAN</div>
+  <div class="post-header-inner">
+    <div class="post-header-tag">Politics</div>
+    <h1 class="post-header-title">Port Sudan and the Anatomy of a Humanitarian Hub</h1>
+    <div class="post-header-meta">
+      <span>Anas Ibrahim</span>
+      <span>· May 2025</span>
+      <span>· 8 min read</span>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<article class="post-body">
+
+  <p>When Khartoum fell to conflict, the world's attention moved with the frontlines. But the logistics of aid — the ports, the warehouses, the coordination offices — had to move somewhere. That somewhere became Port Sudan, a Red Sea city that was never designed to carry this weight.</p>
+
+  <p>Understanding how Port Sudan became Sudan's de facto capital of humanitarian operations requires looking at geography, conflict patterns, and the political economy of access. It is a story not just about logistics, but about <strong>how aid systems adapt under pressure</strong> — and what gets lost in that adaptation.</p>
+
+  <h2>The Geography of Access</h2>
+
+  <p>Sudan's conflict geography is not uniform. The fighting has been concentrated in Khartoum, Darfur, and parts of Kordofan. The Red Sea State, where Port Sudan sits, has remained <em>comparatively stable</em> — which in humanitarian terms means accessible.</p>
+
+  <p>Accessibility is the primary variable in humanitarian logistics. Everything flows from it: supply chains, coordination meetings, donor visits, staff rotations. When Khartoum became inaccessible, organisations did not dissolve — they relocated to wherever the access was.</p>
+
+  <blockquote>
+    <p>Humanitarianism follows access. It does not create it. This distinction matters enormously when evaluating what aid systems can and cannot do in conflict.</p>
+  </blockquote>
+
+  <div class="post-aside">
+    <div class="post-aside-label">Context</div>
+    Port Sudan has a population of approximately 500,000. It hosts the country's main functioning seaport and an international airport, making it the natural logistical anchor for any nationwide response.
+  </div>
+
+  <h2>The Political Economy of a Hub</h2>
+
+  <p>Being a humanitarian hub is not politically neutral. The concentration of international organisations, expatriate staff, and donor resources in a city creates economic incentives, political leverage, and security dynamics that shape the conflict environment around it.</p>
+
+  <p>Local authorities gain bargaining power. Landlords prosper. Certain communities gain proximity to resources that others, displaced further inland, cannot access. The hub creates a geography of its own — one that does not map cleanly onto need.</p>
+
+  <h3>What This Means for Response</h3>
+
+  <p>The implications for humanitarian response are significant. Programmes designed and coordinated from Port Sudan carry the biases of that vantage point. Reach into Darfur or South Kordofan requires either remote management — with all its quality and accountability challenges — or physical deployment that the security situation often makes impossible.</p>
+
+  <p>This is not a failure unique to Sudan. It is the structural condition of humanitarian response in active conflict. The question is whether the system is honest about it.</p>
+
+  <div class="post-divider">§</div>
+
+  <p>Port Sudan will likely remain Sudan's humanitarian nerve centre for as long as the conflict persists in its current form. That is a fact to be worked with, not lamented. But working with it honestly means acknowledging the gaps it creates — and investing in the creative, sometimes dangerous work of bridging them.</p>
+
+  <p>The aid system did not choose Port Sudan. Circumstances did. What the system chooses now is how to operate within those circumstances with integrity.</p>
+
+</article>
+
+<!-- POST FOOTER -->
+<div class="post-footer">
+  <div class="post-footer-inner">
+    <div class="post-footer-label">Continue Reading</div>
+    <div class="post-nav">
+      <a href="#" class="post-nav-item">
+        <div class="post-nav-dir">← Previous</div>
+        <div class="post-nav-title">Hassan bin Farhan al-Maliki and the Courage of Revision</div>
+      </a>
+      <a href="#" class="post-nav-item next">
+        <div class="post-nav-dir">Next →</div>
+        <div class="post-nav-title">Why Roguelites Are the Most Honest Games Ever Made</div>
+      </a>
+    </div>
+    <a href="index.html" class="back-to-blog">← Back to all posts</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">An<span>.</span></div>
+  <div class="footer-copy">© 2025 Anas Ibrahim · Built with intention</div>
+</footer>
+
+<script src="../script.js"></script>
+<script>
+  // READING PROGRESS BAR
+  const bar = document.getElementById('readingProgress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = (scrollTop / docHeight * 100) + '%';
+  });
+</script>
+</body>
+</html>

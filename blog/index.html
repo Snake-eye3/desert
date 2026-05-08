@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Anas Ibrahim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* BLOG-SPECIFIC STYLES */
+  .blog-hero {
+    padding: 10rem 4rem 4rem;
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-hero-bg {
+    position: absolute;
+    font-family: var(--serif);
+    font-size: clamp(6rem, 16vw, 18rem);
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(196, 96, 58, 0.08);
+    top: 50%; right: -2rem;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.04em;
+  }
+  .blog-hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .blog-hero-tag::before { content: ''; width: 2rem; height: 1px; background: var(--terra); }
+  .blog-hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 300;
+    color: var(--sand);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .blog-hero-title em { color: var(--terra); font-style: italic; }
+  .blog-hero-sub {
+    font-size: 0.9rem;
+    color: rgba(232,213,176,0.45);
+    max-width: 40ch;
+    line-height: 1.7;
+  }
+
+  /* FILTERS */
+  .blog-controls {
+    background: var(--sand);
+    padding: 2rem 4rem;
+    border-bottom: 1px solid var(--sand-dark);
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .controls-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-right: 0.5rem;
+  }
+  .filter-btn {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--sand-dark);
+    color: var(--muted);
+    background: transparent;
+    cursor: none;
+    transition: all 0.2s;
+    font-family: var(--sans);
+    font-weight: 500;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--terra);
+    color: var(--terra);
+    background: rgba(196,96,58,0.05);
+  }
+
+  /* LISTING */
+  .blog-listing {
+    background: var(--sand-light);
+    padding: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .blog-posts { display: flex; flex-direction: column; gap: 0; }
+
+  .post-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 2.5rem;
+    align-items: start;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--sand-dark);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .post-row::before {
+    content: '';
+    position: absolute;
+    left: -4rem; right: -4rem; top: 0; bottom: 0;
+    background: var(--sand);
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 0;
+  }
+  .post-row:hover::before { opacity: 1; }
+  .post-row > * { position: relative; z-index: 1; }
+
+  .post-date {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    padding-top: 0.3rem;
+    line-height: 1.4;
+  }
+
+  .post-main {}
+  .post-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+  .post-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s;
+  }
+  .post-row:hover .post-title { color: var(--terra); }
+  .post-excerpt {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 60ch;
+  }
+
+  .post-arrow {
+    font-size: 1.5rem;
+    color: var(--sand-dark);
+    transition: color 0.2s, transform 0.2s;
+    padding-top: 0.5rem;
+    align-self: center;
+  }
+  .post-row:hover .post-arrow { color: var(--terra); transform: translateX(4px); }
+
+  /* FEATURED POST */
+  .post-row.featured {
+    grid-template-columns: 1fr;
+    background: var(--charcoal);
+    padding: 3rem;
+    margin-bottom: 1px;
+    border-bottom: none;
+  }
+  .post-row.featured::before { display: none; }
+  .post-row.featured .post-tag { color: var(--terra); }
+  .post-row.featured .post-title {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--sand);
+    margin-bottom: 1rem;
+  }
+  .post-row.featured:hover .post-title { color: var(--terra); }
+  .post-row.featured .post-excerpt { color: rgba(232,213,176,0.5); max-width: 55ch; }
+  .post-row.featured .post-date { color: rgba(232,213,176,0.35); }
+  .post-row.featured .post-arrow { color: var(--terra); }
+  .featured-meta {
+    display: flex; gap: 2rem; align-items: center;
+    margin-top: 1.5rem;
+  }
+  .featured-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    border: 1px solid var(--terra);
+    padding: 0.25rem 0.6rem;
+  }
+
+  @media (max-width: 768px) {
+    .blog-hero, .blog-controls, .blog-listing { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .post-row { grid-template-columns: 1fr; gap: 0.75rem; }
+    .post-row.featured { padding: 2rem 1.5rem; }
+    .post-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="../index.html">An<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="index.html" style="color:var(--terra)">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="blog-hero">
+  <div class="blog-hero-bg">WRITING</div>
+  <div class="blog-hero-tag">Words & Ideas</div>
+  <h1 class="blog-hero-title">The<br><em>Blog</em></h1>
+  <p class="blog-hero-sub">Politics, history, technology, gaming, and Islamic scholarship. Written slowly and with care.</p>
+</div>
+
+<!-- FILTERS -->
+<div class="blog-controls">
+  <span class="controls-label">Filter</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="politics">Politics</button>
+  <button class="filter-btn" data-filter="history">History & Islam</button>
+  <button class="filter-btn" data-filter="tech">Tech</button>
+  <button class="filter-btn" data-filter="gaming">Gaming</button>
+</div>
+
+<!-- POSTS -->
+<div class="blog-listing">
+  <div class="blog-posts">
+
+    <!-- FEATURED -->
+    <a href="post-1.html" class="post-row featured reveal" data-category="politics">
+      <div class="post-tag">Politics · Featured</div>
+      <h2 class="post-title">Port Sudan and the Anatomy of a Humanitarian Hub</h2>
+      <p class="post-excerpt">How a coastal city became the unlikely nerve centre of Sudan's aid response — and what that reveals about conflict geography, access politics, and the limits of neutrality.</p>
+      <div class="featured-meta">
+        <span class="post-date">May 2025 · 8 min read</span>
+        <span class="featured-label">Featured</span>
+      </div>
+    </a>
+
+    <!-- POSTS LIST -->
+    <a href="#" class="post-row reveal" data-category="history">
+      <div class="post-date">Apr 2025<br>11 min</div>
+      <div class="post-main">
+        <div class="post-tag">History & Islam</div>
+        <h2 class="post-title">Hassan bin Farhan al-Maliki and the Courage of Revision</h2>
+        <p class="post-excerpt">On scholarly independence, the politics of hadith criticism, and why reforming from within is the hardest kind of intellectual work.</p>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="#" class="post-row reveal" data-category="gaming">
+      <div class="post-date">Mar 2025<br>6 min</div>
+      <div class="post-main">
+        <div class="post-tag">Gaming</div>
+        <h2 class="post-title">Why Roguelites Are the Most Honest Games Ever Made</h2>
+        <p class="post-excerpt">Death as a teacher. Runs as essays. A case for why the genre's loop structure is actually a philosophy of learning.</p>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="#" class="post-row reveal" data-category="tech">
+      <div class="post-date">Feb 2025<br>7 min</div>
+      <div class="post-main">
+        <div class="post-tag">Tech</div>
+        <h2 class="post-title">Linux as a Way of Thinking</h2>
+        <p class="post-excerpt">What daily-driving Linux taught me about abstraction, control, and why most people are using computers wrong.</p>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="#" class="post-row reveal" data-category="politics">
+      <div class="post-date">Jan 2025<br>9 min</div>
+      <div class="post-main">
+        <div class="post-tag">Politics</div>
+        <h2 class="post-title">The RSF and the Collapse of the Sudanese State</h2>
+        <p class="post-excerpt">A structural analysis of how a paramilitary force became a geopolitical actor — and what it means for the region's future.</p>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+    <a href="#" class="post-row reveal" data-category="history">
+      <div class="post-date">Dec 2024<br>10 min</div>
+      <div class="post-main">
+        <div class="post-tag">History</div>
+        <h2 class="post-title">The Borno Empire and the Question of Heritage</h2>
+        <p class="post-excerpt">Reclaiming a language and an ancestry. What it means to rediscover where you come from when history has been deliberately obscured.</p>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">An<span>.</span></div>
+  <div class="footer-copy">© 2025 Anas Ibrahim · Built with intention</div>
+</footer>
+
+<script src="../script.js"></script>
+<script>
+  // FILTER LOGIC
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const posts = document.querySelectorAll('.post-row');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      posts.forEach(post => {
+        const cat = post.dataset.category;
+        if (filter === 'all' || cat === filter) {
+          post.style.display = '';
+          setTimeout(() => post.style.opacity = '1', 10);
+        } else {
+          post.style.opacity = '0';
+          setTimeout(() => post.style.display = 'none', 200);
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
